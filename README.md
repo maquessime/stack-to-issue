@@ -16,14 +16,14 @@ curl -d "your_stack" -H "Content-type: text/plain;charset=UTF-8" http://localhos
 {"hash":"080c4480023c2000006801a8000090000003050208402004011c0110038098ca","issues":[]}
 
 #insert issue for your stack
-curl -X PUT http://localhost:8080/stacks/080c4480023c2000006801a8000090000003050208402004011c0110038098ca/issues/MNX-14333
+curl -X PUT http://localhost:8080/stacks/080c4480023c2000006801a8000090000003050208402004011c0110038098ca/issues/BUG1
 curl -d "your_stack" -H "Content-type: text/plain;charset=UTF-8" http://localhost:8080
-{"hash":"080c4480023c2000006801a8000090000003050208402004011c0110038098ca","issues":["MNX-14333"]}
+{"hash":"080c4480023c2000006801a8000090000003050208402004011c0110038098ca","issues":["BUG1"]}
 
 #add an issue for your stack
-curl -X POST http://localhost:8080/stacks/080c4480023c2000006801a8000090000003050208402004011c0110038098ca/issues/MNX-17444
+curl -X POST http://localhost:8080/stacks/080c4480023c2000006801a8000090000003050208402004011c0110038098ca/issues/BUG2
 curl -d "your_stack" -H "Content-type: text/plain;charset=UTF-8" http://localhost:8080
-{"hash":"080c4480023c2000006801a8000090000003050208402004011c0110038098ca","issues":["MNX-14333","MNX-17444"]}
+{"hash":"080c4480023c2000006801a8000090000003050208402004011c0110038098ca","issues":["BUG1","BUG2"]}
 
 #delete a stack
 curl -X DELETE http://localhost:8080/stacks/080c4480023c2000006801a8000090000003050208402004011c0110038098ca/
