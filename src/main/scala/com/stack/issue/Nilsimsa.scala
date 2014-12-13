@@ -8,6 +8,33 @@ import Nilsimsa._
 //remove if not needed
 import scala.collection.JavaConversions._
 
+/**
+ * Computes the Nilsimsa hash for the given string.
+ * @author Albert Weichselbraun <albert.weichselbraun@htwchur.ch>
+ *                              <weichselbraun@weblyzard.com>
+ * 
+ * This class is a translation of the Python implementation by Michael Itz
+ * to the Java language <http://code.google.com/p/py-nilsimsa>.
+ * 
+ * Original C nilsimsa-0.2.4 implementation by cmeclax:
+ * <http://ixazon.dynip.com/~cmeclax/nilsimsa.html>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 dated June, 2007.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program;  if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ * 
+ */
+
 object Nilsimsa {
 
   private val TRAN = Nilsimsa._getByteArray("02D69E6FF91D04ABD022161FD873A1AC" + "3B7062961E6E8F399D05144AA6BEAE0E" +
