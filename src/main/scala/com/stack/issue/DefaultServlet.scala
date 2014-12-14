@@ -15,7 +15,12 @@ class DefaultServlet extends StackToIssueStack {
   }
 
   put("/stacks/:hash/issues/:issue") {
-    DefaultStackRepository.create(stackIssues)
+    try{
+    	DefaultStackRepository.create(stackIssues)
+    } catch {
+      case exception:com.mongodb.MongoException => InternalServerError("Unable to create this stack : Maybe it already exists? try to update with a POST if it's the case.");
+      case exception:Throwable => InternalServerError("Internal server error : "+exception.getMessage);
+    }
   }
 
   post("/stacks/:hash/issues/:issue") {

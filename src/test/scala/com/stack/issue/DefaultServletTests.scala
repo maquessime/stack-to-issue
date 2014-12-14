@@ -22,6 +22,11 @@ final class DefaultServletTests extends ScalatraSuite with FunSuiteLike {
 	  assertNoIssueIsLinkedToTheStack
 	}
 	
+	test("back to back put generate an error"){
+	  addAnIssue
+	  addTheSameIssue
+	}
+	
 	def deleteThisStack{
 	  delete("stacks/"+hash){
 	    status should equal (200)
@@ -53,6 +58,14 @@ final class DefaultServletTests extends ScalatraSuite with FunSuiteLike {
 	def addAnIssue{
 	  put("stacks/"+hash+"/issues/"+issue){
 	    status should equal (200)
+	  }
+	}
+	
+	
+	def addTheSameIssue{
+	  put("stacks/"+hash+"/issues/"+issue){
+	    status should equal (500)
+	    body should include ("Unable to create this stack")
 	  }
 	}
 	
