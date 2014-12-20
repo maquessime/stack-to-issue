@@ -23,9 +23,15 @@ final class StackTests extends ScalatraSuite with FunSuiteLike {
   }
   
   test("clean up is done"){
-    val stack = "bla Feb  29 07:59:59 and 21942148-236e-4300-97b1-1478907b770c but no"
+    val stack = "bla Feb  29 07:59:59 and 21942148-236e-4300-97b1-1478907b770c but 19:19:55,054 no"
       
-      cleanedStack(stack) should equal("bla  and  but no")
+      cleanedStack(stack) should equal("bla  and  but  no")
+  }
+  
+  test("time are removed"){
+    val stack = "yeah 00:25:44,935 yeah"
+      
+      cleanedStack(stack) should equal("yeah  yeah")
   }
 
 }
