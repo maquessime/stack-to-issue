@@ -8,7 +8,7 @@ import ScalateKeys._
 object StacktoissueBuild extends Build {
   val Organization = "stack-to-issue"
   val Name = "stack-to-issue"
-  val Version = "0.1.0-SNAPSHOT"
+  val Version = "0.2.0-SNAPSHOT"
   val ScalaVersion = "2.11.1"
   val ScalatraVersion = "2.3.0"
 
