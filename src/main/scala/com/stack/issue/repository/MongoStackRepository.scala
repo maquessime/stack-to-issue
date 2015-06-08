@@ -5,7 +5,7 @@ import com.stack.issue.domain.Nilsimsa
 import com.stack.issue.domain.StackIssues
 import com.mongodb.casbah.Imports._
 import com.stack.issue.domain.StackIssues
-import com.stack.issue.domain.Stack
+import com.stack.issue.domain.CleanStack
 
 final object MongoStackRepository extends StackRepository {
 
@@ -13,7 +13,7 @@ final object MongoStackRepository extends StackRepository {
 
   def findIssues(stack: String): StackIssues = {
 
-    val hash = new Stack(stack).clean toNilsimsaHash
+    val hash = new CleanStack(stack) toNilsimsaHash
     val issues = findIssuesByHash(hash)
     if (issues.isEmpty) {
       new StackIssues(hash, issuesByNeighboorStacks(hash))

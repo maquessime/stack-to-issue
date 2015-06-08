@@ -4,7 +4,7 @@ import org.scalatra.test.scalatest.ScalatraSuite
 import org.scalatest.FunSuiteLike
 import org.scalatra.test.scalatest.ScalatraSpec
 
-final class StackTests extends ScalatraSuite with FunSuiteLike {
+final class StackUnitTests extends ScalatraSuite with FunSuiteLike {
 
   test("dates are removed") {
     val stack = "balre Feb  29 07:59:59 balbla"
@@ -13,7 +13,7 @@ final class StackTests extends ScalatraSuite with FunSuiteLike {
   }
 
   private def cleanedStack(stackToClean: String) = {
-    new Stack(stackToClean).clean.toString
+    new CleanStack(stackToClean).toString
   }
 
   test("uuid are removed") {
