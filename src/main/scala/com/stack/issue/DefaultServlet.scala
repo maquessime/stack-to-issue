@@ -7,7 +7,7 @@ import com.stack.issue.domain.StackIssues
 import spray.json._
 import com.stack.issue.domain.StackIssuesJsonProtocol._
 
-class DefaultServlet extends StackToIssueServlet {
+class DefaultServlet extends AbstractServlet {
 
   post("/") {
     val stackIssues: StackIssues = MongoStackRepository.findIssues(request.body)
