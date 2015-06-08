@@ -1,6 +1,5 @@
 package com.stack.issue.domain
 
-import com.stack.issue.Nilsimsa
 
 final class Stack(stack:String) {
   

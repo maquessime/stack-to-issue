@@ -1,13 +1,13 @@
 package com.stack.issue.repository
 
 import scala.collection.immutable.List
-import com.stack.issue.Nilsimsa
+import com.stack.issue.domain.Nilsimsa
 import com.stack.issue.domain.StackIssues
 import com.mongodb.casbah.Imports._
 import com.stack.issue.domain.StackIssues
 import com.stack.issue.domain.Stack
 
-final object DefaultStackRepository extends StackRepository {
+final object MongoStackRepository extends StackRepository {
 
   val stacks = MongoClient("localhost", 27017)("test")("stacks")
 

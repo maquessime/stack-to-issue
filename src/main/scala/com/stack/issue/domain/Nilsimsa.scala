@@ -1,11 +1,10 @@
-package com.stack.issue
+package com.stack.issue.domain
 
 import java.util._
 import org.apache.commons.codec.DecoderException
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.lang3.ArrayUtils
 import Nilsimsa._
-//remove if not needed
 import scala.collection.JavaConversions._
 
 /**
