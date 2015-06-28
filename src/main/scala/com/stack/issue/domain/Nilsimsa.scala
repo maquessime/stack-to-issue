@@ -11,17 +11,17 @@ import scala.collection.JavaConversions._
  * Computes the Nilsimsa hash for the given string.
  * @author Albert Weichselbraun <albert.weichselbraun@htwchur.ch>
  *                              <weichselbraun@weblyzard.com>
- * 
+ *
  * This class is a translation of the Python implementation by Michael Itz
  * to the Java language <http://code.google.com/p/py-nilsimsa>.
- * 
+ *
  * Original C nilsimsa-0.2.4 implementation by cmeclax:
  * <http://ixazon.dynip.com/~cmeclax/nilsimsa.html>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 3 dated June, 2007.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,7 +31,7 @@ import scala.collection.JavaConversions._
  * along with this program;  if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- * 
+ *
  */
 
 object Nilsimsa {
@@ -123,9 +123,9 @@ class Nilsimsa {
   }
 
   private def _tran3(a: Int,
-    b: Int,
-    c: Int,
-    n: Int): Int = {
+                     b: Int,
+                     c: Int,
+                     n: Int): Int = {
     val i = (c) ^ TRAN(n)
     (((TRAN((a + n) & 255) ^ TRAN(b & 0xff) * (n + n + 1)) +
       TRAN(i & 0xff)) &
@@ -160,17 +160,38 @@ class Nilsimsa {
     digest()
   }
 
-  def hexdigest(s: String): String = Hex.encodeHexString(digest(s))
+  def hexdigest(s: String): String = {
+    Hex.encodeHexString(digest(s))
+  }
 
   def compare(cmp: Nilsimsa): Int = {
-    var bits = 0
-    var j: Int = 0
+
     val n1 = digest()
     val n2 = cmp.digest()
+    compareHashes(n1, n2)
+  }
+
+  def compareHashes(first: Array[Byte], second: Array[Byte]) = {
+    var bits = 0
+    var j: Int = 0
     for (i <- 0 until 32) {
-      j = 255 & n1(i) ^ n2(i)
+      j = 255 & first(i) ^ second(i)
       bits += POPC(j)
     }
     128 - bits
   }
+
+  def compareHexHashes(hash: String, anotherHash: String) = {
+    var diffBitsCount = 0
+    for (i <- 0 to 63) {
+      val diff = toByte(hash(i)) ^ toByte(anotherHash(i))
+      diffBitsCount += Integer.bitCount(diff)
+    }
+    128 - diffBitsCount
+  }
+  
+  private def toByte(c:Char) = {
+    Character.digit(c, 16)
+  }
+
 }
