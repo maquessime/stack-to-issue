@@ -14,11 +14,17 @@ object InMemoryStackRepository extends StackRepository {
   val stacksPerHash = new ConcurrentHashMap[String, StackIssues].asScala
 
   def addIssue(stackIssues: StackIssues): Unit = {
-    ???
+    val hash = stackIssues.hash
+    val existingStackIssues = stacksPerHash.putIfAbsent(hash, stackIssues)
+    if (existingStackIssues.isDefined) {
+      val mergedIssues = stackIssues.issues ++ existingStackIssues.get.issues
+      val newStackIssues = new StackIssues(hash, mergedIssues)
+      stacksPerHash.put(hash, newStackIssues)
+    }
   }
 
   def create(stackIssues: StackIssues): Unit = {
-    stacksPerHash.putIfAbsent(stackIssues.hash, stackIssues)
+    addIssue(stackIssues)
   }
 
   def delete(hash: String): Unit = {

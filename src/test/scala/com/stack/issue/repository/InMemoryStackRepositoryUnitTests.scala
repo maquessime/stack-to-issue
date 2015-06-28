@@ -14,7 +14,8 @@ final class InMemoryStackRepositoryUnitTests extends ScalatraSuite with FunSuite
   val issue = "ISSUE"
   val anotherIssue = "ANOTHER_ISSUE"
   val issues = List(issue)
-
+  val crappyIssue="CRAPPY"
+  
   test("test that issues can be found with perfect hash match") {
 
     InMemoryStackRepository.create(new StackIssues(hash, issues))
@@ -40,6 +41,15 @@ final class InMemoryStackRepositoryUnitTests extends ScalatraSuite with FunSuite
     val stackIssues = InMemoryStackRepository findIssues totallyDifferentStack
 
     stackIssues.issues should not contain (issue)
+  }
+  
+  test("test that issue can be added"){
+    InMemoryStackRepository create new StackIssues(hash, issues)
+    InMemoryStackRepository addIssue new StackIssues(hash, List(crappyIssue))
+    
+    val stackIssues = InMemoryStackRepository findIssues stack
+    
+    stackIssues.issues should contain (crappyIssue)
   }
 
   def givenStack(stack: String) = {
