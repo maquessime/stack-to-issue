@@ -2,9 +2,10 @@ package com.stack.issue
 
 import org.scalatra.test.scalatest.ScalatraSuite
 import org.scalatest.FunSuiteLike
+import com.stack.issue.domain.Nilsimsa
 
 
-final class DefaultServletTests extends ScalatraSuite with FunSuiteLike {
+final class DefaultServletBlackBoxTests extends ScalatraSuite with FunSuiteLike {
 	val testStack = System.nanoTime.toString
 	val hash = new Nilsimsa() hexdigest testStack
 	val issue = "bug"
