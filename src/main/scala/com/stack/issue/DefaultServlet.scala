@@ -11,6 +11,7 @@ class DefaultServlet extends StackToIssueStack {
 
   post("/") {
     val stackIssues: StackIssues = DefaultStackRepository.findIssues(request.body)
+    response.setContentType("application/json")
     response.getWriter() println stackIssues.toJson
   }
 

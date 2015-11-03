@@ -72,6 +72,7 @@ final class DefaultServletTests extends ScalatraSuite with FunSuiteLike {
 	def assertThatIssueIsLinkedToTheStack{
 	  post("/",testStack){
 	    status should equal (200)
+      header("Content-Type") should include ("application/json")
 	    body should include (issue)
 	  }
 	}
