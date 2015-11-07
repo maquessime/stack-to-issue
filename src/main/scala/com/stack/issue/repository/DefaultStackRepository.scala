@@ -9,7 +9,7 @@ import com.stack.issue.domain.Stack
 
 final object DefaultStackRepository extends StackRepository {
 
-  val stacks = MongoClient("localhost", 27017)("test")("stacks")
+  lazy val stacks = MongoClient("localhost", 27017)("test")("stacks")
 
   def findIssues(stack: String): StackIssues = {
 
