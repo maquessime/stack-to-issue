@@ -1,6 +1,6 @@
 # stack-to-issue #
 
-Status : [![Build Status](https://travis-ci.org/maquessime/stack-to-issue.svg?branch=master)](https://travis-ci.org/maquessime/stack-to-issue)
+[![Build Status](https://travis-ci.org/maquessime/stack-to-issue.svg?branch=master)](https://travis-ci.org/maquessime/stack-to-issue)
 
 ## Build & Run ##
 
