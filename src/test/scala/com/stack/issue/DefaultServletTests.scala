@@ -12,22 +12,28 @@ final class DefaultServletTests extends ScalatraSuite with FunSuiteLike with Mon
   val testStack = System.nanoTime.toString
   val hash = new Nilsimsa() hexdigest testStack
   val issue = "bug"
+  val issueBody = s"""{"issues":["$issue"]}"""
   val anotherIssue = "anotherBug"
+  val specialIssue = "specialIssue"
+  val twoIssuesBody = s"""{"issues":["$anotherIssue","$specialIssue"]}"""
+
+  val addIssuePath = "stacks/" + hash + "/issues"
+
   addServlet(classOf[DefaultServlet], "/*")
 
   var mongoProps: MongodProps = null
 
   before {
-    mongoProps = mongoStart(27017) 
-  } 
+    mongoProps = mongoStart(27017)
+  }
 
   after { mongoStop(mongoProps) }
 
   test("complete flow") {
     assertNoIssueIsLinkedToTheStack
-    addAnIssue
+    addAnIssue(issueBody)
     assertThatIssueIsLinkedToTheStack
-    addAnotherIssue
+    addAnIssue(twoIssuesBody)
     assertIssuesAreLinkedToTheStack
     deleteThisStack
     assertNoIssueIsLinkedToTheStack
@@ -44,33 +50,23 @@ final class DefaultServletTests extends ScalatraSuite with FunSuiteLike with Mon
       status should equal(200)
       body should include(issue)
       body should include(anotherIssue)
+      body should include(specialIssue)
     }
   }
 
-  def addAnotherIssue {
-    post("stacks/" + hash + "/issues/" + anotherIssue) {
-      status should equal(200)
-    }
-  }
 
   def assertNoIssueIsLinkedToTheStack {
     post("/", testStack) {
       status should equal(200)
       body should not include issue
       body should not include anotherIssue
+      body should not include specialIssue
     }
   }
 
-  def addAnIssue {
-    put("stacks/" + hash + "/issues/" + issue) {
+  def addAnIssue(body:String) {
+    post(addIssuePath, body) {
       status should equal(200)
-    }
-  }
-
-  def addTheSameIssue {
-    put("stacks/" + hash + "/issues/" + issue) {
-      status should equal(500)
-      body should include("Unable to create this stack")
     }
   }
 

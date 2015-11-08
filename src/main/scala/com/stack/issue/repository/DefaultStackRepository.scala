@@ -27,7 +27,7 @@ final object DefaultStackRepository extends StackRepository {
     stackIssues.toList.map(extractIssuesFromDBO).flatten
   }
 
-  private def findIssuesByHash(hash: String): List[String] = {
+  def findIssuesByHash(hash: String): List[String] = {
 
     val queryParameter = MongoDBObject("hash" -> hash)
     val stackIssues = stacks.findOne(queryParameter)
