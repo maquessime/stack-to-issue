@@ -35,7 +35,7 @@ class DefaultServlet extends StackToIssueStack {
   }
 
   private def issues = {
-    request.body.parseJson.asJsObject.getFields("issues").toList map (x => x.toString)
+    request.body.parseJson.asJsObject.getFields("issues").apply(0).convertTo[List[String]]
   }
 
   private def hash = {
