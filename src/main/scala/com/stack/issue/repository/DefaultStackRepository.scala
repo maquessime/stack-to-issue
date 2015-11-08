@@ -27,7 +27,7 @@ final object DefaultStackRepository extends StackRepository {
     stackIssues.toList.map(extractIssuesFromDBO).flatten
   }
 
-  private def findIssuesByHash(hash: String): List[String] = {
+  def findIssuesByHash(hash: String): List[String] = {
 
     val queryParameter = MongoDBObject("hash" -> hash)
     val stackIssues = stacks.findOne(queryParameter)
@@ -50,8 +50,12 @@ final object DefaultStackRepository extends StackRepository {
 
   def addIssue(stackIssues: StackIssues) = {
     val id = stackId(stackIssues.hash)
-    val push = $push("issues" -> stackIssues.issues.head)
-    stacks.update(id, push)
+    stackIssues.issues.foreach { issue =>
+      {
+        val push = $push("issues" -> issue)
+        stacks.update(id, push)
+      }
+    }
   }
 
   private def stackId(hash: String) = { MongoDBObject("hash" -> hash) }

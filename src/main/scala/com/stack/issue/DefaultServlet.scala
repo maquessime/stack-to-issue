@@ -6,6 +6,7 @@ import com.stack.issue.repository.DefaultStackRepository
 import com.stack.issue.domain.StackIssues
 import spray.json._
 import com.stack.issue.domain.StackIssuesJsonProtocol._
+import com.stack.issue.domain.StackIssues
 
 class DefaultServlet extends StackToIssueStack {
 
@@ -15,17 +16,14 @@ class DefaultServlet extends StackToIssueStack {
     response.getWriter() println stackIssues.toJson
   }
 
-  put("/stacks/:hash/issues/:issue") {
-    try{
-    	DefaultStackRepository.create(stackIssues)
-    } catch {
-      case exception:com.mongodb.MongoException => InternalServerError("Unable to create this stack : Maybe it already exists? try to update with a POST if it's the case.");
-      case exception:Throwable => InternalServerError("Internal server error : "+exception.getMessage);
-    }
-  }
+  post("/stacks/:hash/issues") {
 
-  post("/stacks/:hash/issues/:issue") {
-    DefaultStackRepository.addIssue(stackIssues)
+    if (DefaultStackRepository.findIssuesByHash(hash).isEmpty) {
+      DefaultStackRepository.create(stackIssues)
+    } else {
+      DefaultStackRepository.addIssue(stackIssues)
+    }
+
   }
 
   delete("/stacks/:hash") {
@@ -33,11 +31,12 @@ class DefaultServlet extends StackToIssueStack {
   }
 
   private def stackIssues = {
+    val printedIssues=issues
     StackIssues(hash, issues)
   }
 
   private def issues = {
-    List(params("issue"))
+    request.body.parseJson.asJsObject.getFields("issues").apply(0).convertTo[List[String]]
   }
 
   private def hash = {
@@ -45,3 +44,4 @@ class DefaultServlet extends StackToIssueStack {
   }
 
 }
+  
