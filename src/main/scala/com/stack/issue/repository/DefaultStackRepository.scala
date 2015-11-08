@@ -50,8 +50,12 @@ final object DefaultStackRepository extends StackRepository {
 
   def addIssue(stackIssues: StackIssues) = {
     val id = stackId(stackIssues.hash)
-    val push = $push("issues" -> stackIssues.issues.head)
-    stacks.update(id, push)
+    stackIssues.issues.foreach { issue =>
+      {
+        val push = $push("issues" -> issue)
+        stacks.update(id, push)
+      }
+    }
   }
 
   private def stackId(hash: String) = { MongoDBObject("hash" -> hash) }

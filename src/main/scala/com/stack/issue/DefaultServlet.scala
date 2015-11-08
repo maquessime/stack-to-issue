@@ -31,6 +31,7 @@ class DefaultServlet extends StackToIssueStack {
   }
 
   private def stackIssues = {
+    val printedIssues=issues
     StackIssues(hash, issues)
   }
 
